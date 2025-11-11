@@ -1,35 +1,51 @@
 // src/components/AuditMetadata.jsx
-
-import React from "react";
+import React from 'react';
 
 const AuditMetadata = ({ caseData }) => {
-  const { compliance, time_saved } = caseData;
+    // Mock metadata structure
+    const metadata = [
+        { label: 'Patient ID', value: 'PNEU-8734' },
+        { label: 'Audit Date', value: '2025-11-10' },
+        { label: 'Attending Physician', value: 'Dr. Jane Smith' },
+        { label: 'Case Severity', value: 'High', color: 'text-red-400' },
+    ];
 
-  return (
-    <section className="bg-white shadow rounded-lg p-6 space-y-4">
-      <h2 className="text-lg font-semibold text-gray-800">🧾 Audit Metadata</h2>
+    return (
+        <div className="relative p-6 rounded-2xl 
+                        bg-white/[0.03] backdrop-blur-lg border border-white/[0.1] shadow-lg 
+                        text-white/80 h-full">
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {Object.entries(compliance).map(([key, value]) => (
-          <div key={key} className="flex justify-between">
-            <span className="capitalize text-gray-600">{key.replace(/([A-Z])/g, " $1")}</span>
-            <span className={value ? "text-green-600" : "text-red-600"}>
-              {value ? "✅ Compliant" : "❌ Missing"}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-4 text-sm text-gray-500">
-        <p>
-          ⏱️ Traditional documentation time: <strong>{time_saved.traditional_minutes} minutes</strong>
-        </p>
-        <p>
-          ⚡ Brahma audit generation time: <strong>{time_saved.brahma_seconds} seconds</strong>
-        </p>
-      </div>
-    </section>
-  );
+            {/* Title with subtle divider line */}
+            <h3 className="text-lg font-semibold text-white mb-4 uppercase tracking-wider">
+                Case Metadata
+            </h3>
+            <div className="mb-4 h-px bg-white/10"></div>
+            
+            {/* Metadata List */}
+            <dl className="space-y-4">
+                {metadata.map((item, index) => (
+                    <div key={index} className="flex justify-between items-center relative">
+                        {/* Label (Blueprint style) */}
+                        <dt className="text-sm font-light text-white/60 uppercase tracking-wider">
+                            {item.label}
+                        </dt>
+                        
+                        {/* Value (Accent style) */}
+                        <dd className={`text-base font-medium ${item.color || 'text-white'}`}>
+                            {item.value}
+                        </dd>
+                        
+                        {/* Subtle accent dot on the left */}
+                        <span className="absolute -left-3 top-1/2 transform -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-neon-blue"></span>
+                    </div>
+                ))}
+            </dl>
+            
+            {/* Faint corner accents */}
+            <div className="absolute top-2 left-2 w-1 h-1 rounded-full bg-white/20"></div>
+            <div className="absolute bottom-2 right-2 w-1 h-1 rounded-full bg-white/20"></div>
+        </div>
+    );
 };
 
 export default AuditMetadata;

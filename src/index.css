@@ -1,45 +1,63 @@
+/* src/index.css */
+
+/* 1. CORE TAILWIND LAYERS (Must be first) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Root variables for fallback styling */
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color-scheme: light dark;
-}
-
-/* Tailwind-applied global body styles */
-body {
-  @apply bg-white text-gray-900 min-h-screen w-full m-0 p-0 font-sans antialiased;
-  @apply flex flex-col items-center justify-start;
-}
-
-/* Anchor styles */
-a {
-  @apply font-medium text-indigo-600 hover:text-indigo-500 no-underline;
-}
-
-/* Headings */
-h1 {
-  @apply text-4xl font-bold leading-tight mb-4;
-}
-
-/* Button styles */
-button {
-  @apply rounded-lg border border-transparent px-4 py-2 text-base font-medium cursor-pointer transition-colors;
-  @apply bg-gray-900 text-white hover:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500;
-}
-
-/* Light mode overrides */
-@media (prefers-color-scheme: light) {
+/* 2. BASE Layer (Global Styles like body/html) */
+@layer base {
   body {
-    @apply bg-white text-gray-900;
+    /* These use @apply, but are defined inside the official @layer base */
+    @apply bg-black text-white antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    font-variation-settings: 'opsz' 32;
   }
-  button {
-    @apply bg-gray-100 text-gray-900 hover:border-indigo-500;
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Optional: Disable text selection for interactive elements */
+  button, .no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+}
+
+/* 3. COMPONENTS Layer (Custom classes applied to JSX elements) */
+@layer components {
+  /* Fix: Put your custom component styles here */
+  .glass-panel {
+    @apply backdrop-blur-md bg-white/[0.03] border border-white/10 rounded-2xl;
+  }
+
+  .glass-panel-hover {
+    @apply hover:bg-white/[0.05] transition-all duration-300;
+  }
+}
+
+/* 4. UTILITIES Layer (Custom utility classes) */
+@layer utilities {
+  /* Fix: Put your custom utility styles here */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400;
+  }
+
+  /* Scrollbar Styling (can be here or in @layer base) */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
   }
 }

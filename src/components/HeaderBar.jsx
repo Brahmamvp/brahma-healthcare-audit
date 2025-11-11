@@ -1,17 +1,14 @@
-// src/components/HeaderBar.jsx
-
-import React from "react";
+// components/HeaderBar.jsx
+import React from 'react';
 
 const HeaderBar = () => {
   return (
-    <header className="w-full bg-white border-b border-gray-200 shadow-sm px-6 py-4 flex items-center justify-between">
-      <h1 className="text-xl font-semibold text-gray-800">
-        🩺 Brahma Healthcare Audit
+    <div className="w-full px-10 py-6 flex flex-col gap-1 backdrop-blur-md bg-white/5 border-b border-white/10 rounded-b-xl shadow-sm">
+      <h1 className="text-2xl md:text-3xl font-serif text-white tracking-wide">
+        Healthcare Audit
       </h1>
-      <div className="text-sm text-gray-500">
-        Fixed Demo Mode · Pneumonia Case
-      </div>
-    </header>
+      <p className="text-white/70 text-sm md:text-base font-light">Pneumonia Case 1</p>
+    </div>
   );
 };
 
