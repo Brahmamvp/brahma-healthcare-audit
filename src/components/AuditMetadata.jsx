@@ -1,49 +1,65 @@
 // src/components/AuditMetadata.jsx
+
 import React from 'react';
 
 const AuditMetadata = ({ caseData }) => {
-    // Mock metadata structure
-    const metadata = [
-        { label: 'Patient ID', value: 'PNEU-8734' },
-        { label: 'Audit Date', value: '2025-11-10' },
-        { label: 'Attending Physician', value: 'Dr. Jane Smith' },
-        { label: 'Case Severity', value: 'High', color: 'text-red-400' },
-    ];
+    
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'High Risk':
+                return 'bg-red-900/40 text-red-300 border-red-500/30';
+            case 'Low Risk':
+                return 'bg-green-900/40 text-green-300 border-green-500/30';
+            case 'Normal':
+            default:
+                return 'bg-blue-900/40 text-blue-300 border-blue-500/30';
+        }
+    };
+
+    const statusClass = getStatusColor(caseData.status);
 
     return (
-        <div className="relative p-6 rounded-2xl 
-                        bg-white/[0.03] backdrop-blur-lg border border-white/[0.1] shadow-lg 
-                        text-white/80 h-full">
-
-            {/* Title with subtle divider line */}
-            <h3 className="text-lg font-semibold text-white mb-4 uppercase tracking-wider">
-                Case Metadata
+        <div className="p-6 rounded-3xl 
+                        bg-white/[0.03] backdrop-blur-lg border border-white/[0.1] shadow-2xl h-full">
+            
+            <h3 className="text-xl font-light text-white mb-4 tracking-wide border-b border-white/10 pb-3">
+                Audit Metadata
             </h3>
-            <div className="mb-4 h-px bg-white/10"></div>
-            
-            {/* Metadata List */}
-            <dl className="space-y-4">
-                {metadata.map((item, index) => (
-                    <div key={index} className="flex justify-between items-center relative">
-                        {/* Label (Blueprint style) */}
-                        <dt className="text-sm font-light text-white/60 uppercase tracking-wider">
-                            {item.label}
-                        </dt>
-                        
-                        {/* Value (Accent style) */}
-                        <dd className={`text-base font-medium ${item.color || 'text-white'}`}>
-                            {item.value}
-                        </dd>
-                        
-                        {/* Subtle accent dot on the left */}
-                        <span className="absolute -left-3 top-1/2 transform -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-neon-blue"></span>
-                    </div>
-                ))}
-            </dl>
-            
-            {/* Faint corner accents */}
-            <div className="absolute top-2 left-2 w-1 h-1 rounded-full bg-white/20"></div>
-            <div className="absolute bottom-2 right-2 w-1 h-1 rounded-full bg-white/20"></div>
+
+            {/* Status Indicator */}
+            <div className={`flex items-center justify-center p-3 rounded-xl mb-6 ${statusClass}`}>
+                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span className="text-lg font-semibold uppercase tracking-wider">
+                    {caseData.status}
+                </span>
+            </div>
+
+            {/* Key Data Points */}
+            <div className="space-y-4">
+                <div className="flex justify-between items-center text-sm">
+                    <span className="text-white/60">Case ID:</span>
+                    <span className="font-mono font-medium text-white">{caseData.caseId}</span>
+                </div>
+                
+                <div className="flex justify-between items-center text-sm">
+                    <span className="text-white/60">Audit Date:</span>
+                    <span className="font-medium text-white">{caseData.date}</span>
+                </div>
+
+                <div className="flex justify-between items-center text-sm">
+                    <span className="text-white/60">Priority:</span>
+                    <span className="font-medium text-white">{caseData.priority}</span>
+                </div>
+
+                {/* Auditor Highlighted */}
+                <div className="flex justify-between items-center text-sm pt-2 border-t border-white/10">
+                    <span className="text-white/60">Auditor:</span>
+                    <span className="font-bold text-indigo-400">{caseData.auditor}</span>
+                </div>
+            </div>
         </div>
     );
 };
